@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Producto - 80.000 CLP</title>
+  <script src="https://www.paypal.com/sdk/js?client-id=AX_XLNcVf4_SKyeAWleQ6NHp_q5BGLY8R6HxT1r2Ah0cnEIfpZ1BQutXskYoBFL412tUDH-a3pOV7I4g&currency=CLP"></script>
+</head>
+<body>
+  <h1>Producto</h1>
+  <p>Precio: $80.000 CLP</p>
+
+  <div id="paypal-button-container"></div>
+
+  <script>
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              currency_code: "CLP",
+              value: "80000"
+            },
+            description: "Producto especial"
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert('Pago completado por ' + details.payer.name.given_name);
+        });
+      }
+    }).render('#paypal-button-container');
+  </script>
+</body>
+</html>
